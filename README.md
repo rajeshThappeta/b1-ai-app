@@ -3,12 +3,68 @@
 # Create models
 
 
+# Create vector search  index for the current collection
+    - go to collection
+    - go to indexes tab
+    - select "search index"
+    - click on "Create vector search index"
+    - select "vector search"
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Keyword based search
+
+Query: "password reset"
+
+Sentence 1: "how to reset your password" → MATCH (exact terms)
+Sentence 2: "forgotten credentials recovery" → NO MATCH (different terms)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Semantic search
+
+Query: "password reset" → [0.2, -0.1, 0.8, 0.3, ...] (embeddings)
+
+Sentence 1: "how to reset your password" → [0.21, -0.09, 0.79, 0.31, ...] → MATCH (0.98 similarity)
+Sentence 2: "forgotten credentials recovery" → [0.22, -0.11, 0.81, 0.29, ...] → MATCH (0.94 similarity)
+Sentence 3: "change your login access" → [0.19, -0.08, 0.77, 0.32, ...] → MATCH (0.91 similarity)
 
 
 
@@ -57,6 +113,9 @@
 9. Redis is an in-memory data store often used for caching and fast access.
 
 10. Git is a version control system used to track changes in source code.
+
+
+
 
 # Queries to retrieve
 

@@ -16,4 +16,32 @@ sentenceRouter.post("/", async (req, res) => {
 });
 
 // Search for sentences
-sentenceRouter.post("/search", async (req, res) => {});
+sentenceRouter.post("/search", async (req, res) => {
+  // get user's query from req
+  let query = req.body.query;
+  // get embedding of user's query
+  let queryEmbedding = await generateEmbedding(query);
+  // vector search
+  let results = await sentenceModel.aggregate([
+    {
+      $vectorSearch: {
+        index: "vector_index",
+        path: "embedding",
+        queryVector: queryEmbedding,
+        numCandidates: 10,
+        limit: 3,
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        sentence: 1,
+        score:{
+          $meta:"vectorSearchScore"
+        }
+      },
+    },
+  ]);
+  // send res
+  res.status(200).json(results);
+});
